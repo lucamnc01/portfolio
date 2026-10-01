@@ -23,7 +23,7 @@ for(const n of [2,3,4,7,8,9,10,11,12,13,14,15]){
  const card=document.createElement('div');card.className='clip loading';
  const video=document.createElement('video');video.dataset.src=src;video.muted=true;video.loop=true;video.playsInline=true;video.preload='none';video.setAttribute('aria-hidden','true');
  video.addEventListener('loadeddata',()=>card.classList.remove('loading'));video.addEventListener('error',()=>{card.classList.add('failed');card.classList.remove('loading')});
- const button=document.createElement('button');button.className='clip-open';button.setAttribute('aria-label',`Apri sequenza ${id}`);button.innerHTML=`<span>SEQUENZA / ${id}</span><b aria-hidden="true">▶</b>`;
+ const button=document.createElement('button');button.className='clip-open';button.setAttribute('aria-label',`Apri sequenza ${id}`);button.innerHTML=`<span>SEQUENZA / ${id}</span>`;
  button.addEventListener('click',()=>{document.querySelector('#viewer-title').textContent=`Sequenza ${id}`;document.querySelector('#video-error').hidden=true;full.src=src;full.muted=false;viewer.showModal();syncMotion();full.play().catch(()=>{});});
  card.append(video,button);wall.append(card);observer.observe(video);
 }
