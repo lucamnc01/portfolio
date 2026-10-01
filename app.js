@@ -11,11 +11,11 @@ const films = [
  ['Boys Guardian transformation incomplete','Video','https://youtu.be/IFC-vRcFhJk'],
  ['Brat or Demure?','Social · TikTok','https://vm.tiktok.com/ZNe384mbe/']
 ];
-const wall=document.querySelector('#wall'),viewer=document.querySelector('#viewer'),full=document.querySelector('#full-video'),motion=document.querySelector('#motion');
+const wall=document.querySelector('#wall'),viewer=document.querySelector('#viewer'),full=document.querySelector('#full-video');
 const reduced=matchMedia('(prefers-reduced-motion: reduce)');
 let paused=reduced.matches;const visible=new Set();
-function syncMotion(){motion.textContent=paused?'Avvia anteprime':'Pausa anteprime';motion.setAttribute('aria-pressed',String(paused));for(const v of wall.querySelectorAll('video')){if(!paused&&!document.hidden&&!viewer.open&&visible.has(v))v.play().catch(()=>{});else v.pause();}}
-motion.addEventListener('click',()=>{paused=!paused;syncMotion()});reduced.addEventListener('change',e=>{paused=e.matches;syncMotion()});document.addEventListener('visibilitychange',syncMotion);
+function syncMotion(){for(const v of wall.querySelectorAll('video')){if(!paused&&!document.hidden&&!viewer.open&&visible.has(v))v.play().catch(()=>{});else v.pause();}}
+reduced.addEventListener('change',e=>{paused=e.matches;syncMotion()});document.addEventListener('visibilitychange',syncMotion);
 const observer=new IntersectionObserver(entries=>{for(const entry of entries){const v=entry.target;if(entry.isIntersecting){visible.add(v);if(!v.src){v.src=v.dataset.src;v.load();}}else{visible.delete(v);v.pause();}}syncMotion();},{threshold:.15});
 // Existing preview assets from Luca's portfolio. No unverified film-title mapping.
 for(const n of [2,3,4,7,8,9,10,11,12,13,14,15]){
